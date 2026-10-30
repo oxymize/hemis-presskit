@@ -21,7 +21,7 @@ export function TrackCard({ track, index = 0 }: { track: Track; index?: number }
             loading="lazy"
             className="aspect-square size-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
           />
-          <span className="pointer-events-none absolute inset-x-3 bottom-3 flex items-center justify-between rounded-[10px] bg-bg/80 px-3 py-2 text-[11px] uppercase tracking-[0.12em] text-muted backdrop-blur-sm">
+          <span className="pointer-events-none absolute inset-x-3 bottom-3 flex items-center justify-between rounded-[10px] bg-black/80 px-3 py-2 text-[11px] uppercase tracking-[0.12em] text-muted backdrop-blur-sm">
             <span>{track.kind}</span>
             <span className="tabular-nums text-faint">{formatCount(track.plays)} plays</span>
           </span>

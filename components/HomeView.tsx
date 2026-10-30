@@ -265,7 +265,7 @@ function BioTeaser() {
         <Reveal>
           <div className="image-frame relative aspect-[4/5] max-w-[460px] rounded-image">
             <img src="/images/hemis-avatar.jpg" alt="HEMIS" className="size-full object-cover" loading="lazy" />
-            <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgb(7_7_11/0.9),transparent)] p-5">
+            <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgb(0_0_0/0.9),transparent)] p-5">
               <p className="text-[12px] uppercase tracking-[0.18em] text-muted">Perfil verificado · SoundCloud</p>
             </div>
           </div>

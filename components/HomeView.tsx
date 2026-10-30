@@ -103,40 +103,36 @@ function Hero() {
 // (ShapeWaves, WebGPU). Si el navegador no expone WebGPU el componente cae y
 // queda un degradado estático, para que la portada nunca se vea vacía.
 function HeroBackdrop() {
-  // El componente gestiona su propio ciclo: compila el shader, espera al
-  // adaptador y presenta su primer frame cuando puede. No lo desmontamos por
-  // tiempo, porque en GPUs integradas o con shaders lentos tardaría más que
-  // cualquier plazo arbitrario y mataríamos el efecto justo antes de pintar.
-  const [wavesFailed, setWavesFailed] = useState(false)
-
+  // La capa queda montada siempre: el componente gestiona su ciclo de vida y, si
+  // WebGPU no está disponible, su canvas se queda transparente y se ve el
+  // degradado de debajo. Así también podemos inspeccionar su `data-ready` desde
+  // la consola en lugar de que la capa desaparezca sin dejar rastro.
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
       <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_15%_5%,rgb(59_69_255/0.22),transparent_62%),radial-gradient(75%_65%_at_88%_35%,rgb(255_47_158/0.16),transparent_60%)]" />
-      {!wavesFailed && (
-        <div className="absolute inset-0">
-          <ShapeWaves
-            color="#7d8190"
-            hoverColor="#3b45ff"
-            backgroundColor="#07070b"
-            shapes="mixed"
-            cellSize={12}
-            dotSize={0.7}
-            speed={1.2}
-            scale={1.05}
-            contrast={1.1}
-            brightness={0.42}
-            flow={0.06}
-            fade={0.35}
-            interactive
-            splashRadius={46}
-            splashStrength={0.45}
-            glow={0.9}
-            intro
-            introDuration={1.8}
-            onError={() => setWavesFailed(true)}
-          />
-        </div>
-      )}
+      <div className="absolute inset-0">
+        <ShapeWaves
+          color="#7d8190"
+          hoverColor="#3b45ff"
+          backgroundColor="#07070b"
+          shapes="mixed"
+          cellSize={12}
+          dotSize={0.7}
+          speed={1.2}
+          scale={1.05}
+          contrast={1.1}
+          brightness={0.42}
+          flow={0.06}
+          fade={0.35}
+          interactive
+          splashRadius={46}
+          splashStrength={0.45}
+          glow={0.9}
+          intro
+          introDuration={1.8}
+          onError={(error: Error) => console.warn('[ShapeWaves] WebGPU no disponible:', error?.message ?? error)}
+        />
+      </div>
       <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgb(7_7_11/0.2)_45%,var(--color-bg)_90%)]" />
       <div className="grain absolute inset-0" />
     </div>

@@ -3,7 +3,7 @@
 import { ArrowUpRight, Play } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
 import { Lines, Magnetic, Reveal } from '@/components/motion'
 import ShapeWaves from '@/components/ShapeWaves'
@@ -103,24 +103,17 @@ function Hero() {
 // (ShapeWaves, WebGPU). Si el navegador no expone WebGPU el componente cae y
 // queda un degradado estático, para que la portada nunca se vea vacía.
 function HeroBackdrop() {
-  const wavesRef = useRef<HTMLDivElement | null>(null)
+  // El componente gestiona su propio ciclo: compila el shader, espera al
+  // adaptador y presenta su primer frame cuando puede. No lo desmontamos por
+  // tiempo, porque en GPUs integradas o con shaders lentos tardaría más que
+  // cualquier plazo arbitrario y mataríamos el efecto justo antes de pintar.
   const [wavesFailed, setWavesFailed] = useState(false)
-
-  // WebGPU puede quedarse colgado (adaptador que nunca responde) sin lanzar
-  // error. Si en 6 s no hay primer frame, nos quedamos con el degradado.
-  useEffect(() => {
-    const id = window.setTimeout(() => {
-      const el = wavesRef.current?.querySelector('.shape-waves')
-      if (!el || el.getAttribute('data-ready') !== 'true') setWavesFailed(true)
-    }, 6000)
-    return () => window.clearTimeout(id)
-  }, [])
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
       <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_15%_5%,rgb(59_69_255/0.22),transparent_62%),radial-gradient(75%_65%_at_88%_35%,rgb(255_47_158/0.16),transparent_60%)]" />
       {!wavesFailed && (
-        <div ref={wavesRef} className="absolute inset-0">
+        <div className="absolute inset-0">
           <ShapeWaves
             color="#7d8190"
             hoverColor="#3b45ff"

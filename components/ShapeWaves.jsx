@@ -480,7 +480,7 @@ export default function ShapeWaves({
 
     void (async () => {
       try {
-        gpu = await init({ powerPreference: 'low-power' });
+        gpu = await init({ powerPreference: 'high-performance' });
         if (disposed) return gpu.dispose();
         unsubscribeGpuError = gpu.onError(reportFailure);
 

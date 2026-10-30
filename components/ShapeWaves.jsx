@@ -480,7 +480,19 @@ export default function ShapeWaves({
 
     void (async () => {
       try {
-        gpu = await init({ powerPreference: 'high-performance' });
+        // 'high-performance' puede devolver null en equipos híbridos donde el
+        // adaptador por defecto sí existe; en ese caso reintentamos sin forzar
+        // la preferencia antes de dar WebGPU por no disponible.
+        const initGpu = async () => {
+          try {
+            return await init({ powerPreference: 'high-performance' });
+          } catch (error) {
+            const message = String(error?.message ?? error);
+            if (!/requestAdapter|returned null|unsupported/i.test(message)) throw error;
+            return await init();
+          }
+        };
+        gpu = await initGpu();
         if (disposed) return gpu.dispose();
         unsubscribeGpuError = gpu.onError(reportFailure);
 

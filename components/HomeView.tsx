@@ -129,7 +129,7 @@ function ListeningRoom() {
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-12">
         <Reveal className="lg:sticky lg:top-24 lg:self-start">
-          <div className="overflow-hidden rounded-image border border-line bg-surface">
+          <div className="overflow-hidden rounded-image border border-line bg-surface/70">
             <img src={track.artwork} alt={`Portada de ${track.title}`} className="aspect-square w-full object-cover" />
             <div className="p-4">
               <p className="text-[11px] uppercase tracking-[0.16em] text-accent-2">{track.kind}</p>
@@ -164,7 +164,7 @@ function ListeningRoom() {
                     aria-pressed={active}
                     className={cx(
                       'group flex w-full items-center gap-3 px-1 py-3 text-left transition-colors sm:gap-4',
-                      active ? 'bg-surface' : 'hover:bg-surface/60',
+                      active ? 'bg-surface/70' : 'hover:bg-surface/40',
                     )}
                   >
                     <span className="w-6 shrink-0 text-[12px] tabular-nums text-faint">{String(i + 1).padStart(2, '0')}</span>

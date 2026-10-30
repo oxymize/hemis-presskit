@@ -35,7 +35,7 @@ export function Footer() {
           </div>
 
           <Reveal delay={0.15}>
-            <div className="rounded-card border border-line bg-surface p-7">
+            <div className="rounded-card border border-line bg-surface/70 p-7">
               <p className="text-[12px] uppercase tracking-[0.14em] text-faint">Enlaces</p>
               <ul className="mt-4 divide-y divide-line border-t border-line">
                 {site.socials.map((s) => (

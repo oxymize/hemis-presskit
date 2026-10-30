@@ -14,7 +14,7 @@ export function TrackCard({ track, index = 0 }: { track: Track; index?: number }
       transition={{ duration: 0.8, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link href={`/track/${track.slug}`} className="group block">
-        <div className="relative overflow-hidden rounded-image bg-surface-2">
+        <div className="relative overflow-hidden rounded-image bg-surface-2/70">
           <img
             src={track.artwork}
             alt={`Portada de ${track.title}`}

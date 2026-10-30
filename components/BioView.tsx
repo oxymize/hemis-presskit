@@ -75,7 +75,7 @@ export function BioView() {
             ))}
           </Reveal>
 
-          <Reveal delay={0.25} className="mt-16 rounded-card border border-line bg-surface p-8">
+          <Reveal delay={0.25} className="mt-16 rounded-card border border-line bg-surface/70 p-8">
             <h2 className="font-display text-[30px]">Booking</h2>
             <p className="mt-2 max-w-md text-[14.5px] leading-relaxed text-muted">
               Fechas, remixes, colaboraciones y prensa: todo pasa por el mismo correo.

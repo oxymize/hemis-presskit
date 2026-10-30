@@ -20,7 +20,7 @@ export function SoundCloud({ url, artwork, title, height = 166 }: { url: string;
         src={src}
         height={height}
         allow="autoplay"
-        className="w-full rounded-[12px] border border-line bg-surface"
+        className="w-full rounded-[12px] border border-line bg-surface/70"
       />
     )
   }
@@ -29,7 +29,7 @@ export function SoundCloud({ url, artwork, title, height = 166 }: { url: string;
     <button
       type="button"
       onClick={() => setOpen(true)}
-      className="group flex w-full items-center gap-3 rounded-[12px] border border-line bg-surface px-3 py-2.5 text-left transition-colors hover:border-line-strong"
+      className="group flex w-full items-center gap-3 rounded-[12px] border border-line bg-surface/70 px-3 py-2.5 text-left transition-colors hover:border-line-strong"
     >
       {artwork && <img src={artwork} alt="" className="size-11 shrink-0 rounded-[8px] object-cover" />}
       <span className="min-w-0 flex-1">

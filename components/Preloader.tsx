@@ -43,7 +43,7 @@ export function Preloader() {
       {show && (
         <motion.div
           key="preloader"
-          className="fixed inset-0 z-[100] flex items-end justify-between bg-bg p-6 text-fg sm:p-10"
+          className="fixed inset-0 z-[100] flex items-end justify-between bg-black p-6 text-fg sm:p-10"
           exit={{ y: '-100%' }}
           transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
         >

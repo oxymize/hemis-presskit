@@ -46,7 +46,7 @@ export function Nav() {
 
   return (
     <header className={cx('fixed inset-x-0 top-0 z-40 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]', hidden && '-translate-y-full')}>
-      <div className="border-b border-line/60 bg-bg/70 backdrop-blur-md">
+      <div className="border-b border-line/60">
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-5 sm:px-8">
           <Link href="/" className="font-display-wide text-[19px] tracking-[0.02em]">
             {site.name}

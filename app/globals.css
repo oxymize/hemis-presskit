@@ -60,6 +60,9 @@
     overscroll-behavior-y: none;
   }
   body {
+    /* Aísla el contexto para que el fondo fijo con z-index negativo quede
+       delante del color de fondo del body y detrás del contenido. */
+    isolation: isolate;
     background: var(--color-bg);
     color: var(--color-fg);
     font-family: var(--font-sans);

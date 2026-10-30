@@ -5,6 +5,7 @@ import type { Metadata, Viewport } from 'next'
 import { Footer } from '@/components/Footer'
 import { Nav } from '@/components/Nav'
 import { Preloader } from '@/components/Preloader'
+import { SiteBackground } from '@/components/SiteBackground'
 import { site } from '@/data/site'
 
 import './globals.css'
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es">
       <body>
+        <SiteBackground />
         <Preloader />
         <Nav />
         <main>{children}</main>

@@ -1,12 +1,18 @@
 'use client'
 
-import ShapeWaves from '@/components/ShapeWaves'
+import dynamic from 'next/dynamic'
+
+import './SiteBackground.css'
+
+// vgpu habla con navigator.gpu nada más cargarse, así que se importa solo en el
+// cliente: si se evaluara en el servidor, el módulo tocaría APIs de navegador.
+const ShapeWaves = dynamic(() => import('@/components/ShapeWaves'), { ssr: false })
 
 // Fondo animado de todo el presskit. Vive en el layout para que la misma
 // retícula acompañe a todas las rutas y el shader no se reinicie al navegar.
 export function SiteBackground() {
   return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: -1 }}>
+    <div className="site-background" style={{ position: 'fixed', inset: 0, zIndex: -1 }}>
       <ShapeWaves
         text="ツ"
         fontFamily='Geist, "Geist Sans", system-ui, sans-serif'
@@ -34,6 +40,10 @@ export function SiteBackground() {
         paused={false}
         onError={(error: Error) => console.warn('[ShapeWaves] WebGPU no disponible:', error?.message ?? error)}
       />
+      {/* Sin WebGPU el canvas se queda en opacity 0. Va después del componente
+          porque su raíz pinta backgroundColor inline: por debajo quedaría tapada.
+          Se retira sola en cuanto el shader marca data-ready. */}
+      <div className="waves-fallback" aria-hidden />
     </div>
   )
 }

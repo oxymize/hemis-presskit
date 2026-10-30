@@ -60,10 +60,9 @@
     overscroll-behavior-y: none;
   }
   body {
-    /* Aísla el contexto para que el fondo fijo con z-index negativo quede
-       delante del color de fondo del body y detrás del contenido. */
-    isolation: isolate;
-    background: var(--color-bg);
+    /* Transparente a propósito: el fondo fijo de ShapeWaves va con z-index -1
+       y un color opaco aquí lo taparía. El negro base lo pinta `html`. */
+    background: transparent;
     color: var(--color-fg);
     font-family: var(--font-sans);
     font-size: 15px;

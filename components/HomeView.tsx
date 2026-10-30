@@ -3,9 +3,10 @@
 import { ArrowUpRight, Play } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Lines, Magnetic, Reveal } from '@/components/motion'
+import ShapeWaves from '@/components/ShapeWaves'
 import { SoundCloud } from '@/components/SoundCloud'
 import { TrackCard } from '@/components/TrackCard'
 import { bySlug, featured, formatCount, formatLength, sets, site, stats, tracks } from '@/data/site'
@@ -98,24 +99,52 @@ function Hero() {
   )
 }
 
-// La portada de su perfil, muy oscurecida, con dos focos de color: el azul
-// eléctrico de la marca y el magenta del artwork. El grano evita que el
-// degradado se lea como una plantilla.
+// El hero respira sobre una retícula de puntos que ondula con el puntero
+// (ShapeWaves, WebGPU). Si el navegador no expone WebGPU el componente cae y
+// queda un degradado estático, para que la portada nunca se vea vacía.
 function HeroBackdrop() {
+  const wavesRef = useRef<HTMLDivElement | null>(null)
+  const [wavesFailed, setWavesFailed] = useState(false)
+
+  // WebGPU puede quedarse colgado (adaptador que nunca responde) sin lanzar
+  // error. Si en 6 s no hay primer frame, nos quedamos con el degradado.
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      const el = wavesRef.current?.querySelector('.shape-waves')
+      if (!el || el.getAttribute('data-ready') !== 'true') setWavesFailed(true)
+    }, 6000)
+    return () => window.clearTimeout(id)
+  }, [])
+
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,#000_55%,transparent_100%)]">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.6, ease }} className="absolute inset-0">
-        <img
-          src="/images/hemis-banner.jpg"
-          alt=""
-          className="absolute inset-0 size-full scale-105 object-cover opacity-45"
-          style={{ objectPosition: 'center 42%' }}
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgb(7_7_11/0.35),rgb(7_7_11/0.75)_55%,var(--color-bg))]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(7_7_11/0.9),transparent_65%)]" />
-        <div className="round absolute -left-[10%] top-[10%] h-[60%] w-[46%] animate-drift-a rounded-full bg-[radial-gradient(closest-side,rgb(59_69_255/0.5),transparent)] blur-3xl" />
-        <div className="round absolute right-[-8%] top-[30%] h-[55%] w-[40%] animate-drift-c rounded-full bg-[radial-gradient(closest-side,rgb(255_47_158/0.35),transparent)] blur-3xl" />
-      </motion.div>
+    <div aria-hidden className="pointer-events-none absolute inset-0">
+      <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_15%_5%,rgb(59_69_255/0.22),transparent_62%),radial-gradient(75%_65%_at_88%_35%,rgb(255_47_158/0.16),transparent_60%)]" />
+      {!wavesFailed && (
+        <div ref={wavesRef} className="absolute inset-0">
+          <ShapeWaves
+            color="#7d8190"
+            hoverColor="#3b45ff"
+            backgroundColor="#07070b"
+            shapes="mixed"
+            cellSize={12}
+            dotSize={0.7}
+            speed={1.2}
+            scale={1.05}
+            contrast={1.1}
+            brightness={0.42}
+            flow={0.06}
+            fade={0.35}
+            interactive
+            splashRadius={46}
+            splashStrength={0.45}
+            glow={0.9}
+            intro
+            introDuration={1.8}
+            onError={() => setWavesFailed(true)}
+          />
+        </div>
+      )}
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgb(7_7_11/0.2)_45%,var(--color-bg)_90%)]" />
       <div className="grain absolute inset-0" />
     </div>
   )
